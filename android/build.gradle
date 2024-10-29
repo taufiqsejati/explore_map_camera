@@ -3,7 +3,7 @@ allprojects {
         google()
         mavenCentral()
     }
-        // This code is where all the magic happens and fixes the error.
+    // This code is where all the magic happens and fixes the error.
     subprojects {
         afterEvaluate { project ->
             if (project.hasProperty('android')) {
@@ -14,10 +14,18 @@ allprojects {
                 }
             }
         }
+        afterEvaluate { project ->
+            if (project.plugins.hasPlugin("com.android.application") ||
+                    project.plugins.hasPlugin("com.android.library")) {
+                project.android {
+                    compileSdkVersion 34
+                    buildToolsVersion "34.0.0"
+                }
+            }
+    }
     }
     // This code is where all the magic happens and fixes the error.
 }
-
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
